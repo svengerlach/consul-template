@@ -498,6 +498,46 @@ func TestParseTemplateConfig(t *testing.T) {
 			},
 			false,
 		},
+		{
+			"command_with_quotes",
+			"/tmp/a.txt:/tmp/b.txt:'/app/console cache:clear'",
+			&TemplateConfig{
+				Source:      String(`/tmp/a.txt`),
+				Destination: String(`/tmp/b.txt`),
+				Command:     String(`/app/console cache:clear`),
+			},
+			false,
+		},
+		{
+			"source_with_quotes",
+			"'/tmp/a.txt':/tmp/b.txt:/app/console cache:clear",
+			&TemplateConfig{
+				Source:      String(`/tmp/a.txt`),
+				Destination: String(`/tmp/b.txt`),
+				Command:     String(`/app/console cache:clear`),
+			},
+			false,
+		},
+		{
+			"destination_with_quotes",
+			"/tmp/a.txt:'/tmp/b.txt':/app/console cache:clear",
+			&TemplateConfig{
+				Source:      String(`/tmp/a.txt`),
+				Destination: String(`/tmp/b.txt`),
+				Command:     String(`/app/console cache:clear`),
+			},
+			false,
+		},
+		{
+			"all_with_quotes",
+			"'/tmp/a.txt':'/tmp/b.txt':'/app/console cache:clear'",
+			&TemplateConfig{
+				Source:      String(`/tmp/a.txt`),
+				Destination: String(`/tmp/b.txt`),
+				Command:     String(`/app/console cache:clear`),
+			},
+			false,
+		},
 	}
 
 	for i, tc := range cases {

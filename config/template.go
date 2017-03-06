@@ -30,7 +30,7 @@ var (
 	ErrTemplateInvalidFormat = errors.New("template: invalid format")
 
 	// configTemplateRe is the pattern to split the config template syntax.
-	configTemplateRe = regexp.MustCompile("([a-zA-Z]:)?([^:]+)")
+	configTemplateRe = regexp.MustCompile("(')?([a-zA-Z]:)?(?(1)(.+?)\\1|([^:]+))")
 )
 
 // TemplateConfig is a representation of a template on disk, as well as the
